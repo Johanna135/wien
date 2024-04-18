@@ -50,3 +50,20 @@ L.control
 L.control
   .fullscreen()
   .addTo(map);
+
+//syntax einer Funktion
+// function addiere(zahl1, zahl2) {
+//   let summe = zahl1 + zahl2;
+//   console.log("Summe: ", summe)
+// }
+// addiere(4, 7);
+
+async function loadSights(url) { // async weil wir brauchen das für await, für funktionen die länger dauern können
+  console.log("Loading", url);
+  let response = await fetch(url);
+  let geojson = await response.json();
+  console.log(geojson);
+  L.geoJSON(geojson).addTo(map);
+  // wir laden die url down vom data.gv server und dann wandeln wir das in ein geojson um, so kann man sofort was visualisieren
+}
+loadSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
