@@ -6,6 +6,7 @@ body {
     font-family: "Open Sans", sans-serif;
 }
 
+/* links sind schwarz*/
 a {
     color: black;
 }
@@ -35,9 +36,12 @@ article {
     margin-top: 0.5em;
 }
 
+/*das ist die id map*/
 #map {
     width: 100%;
+    /*100% im container*/
     height: 85vh;
+    /*vh= viewpoint height, das ist alles was der Browser grad anzeigen kann, mit 85vh dann ist die karte immer 85% von dem was der Browser am Bild grad anzeigt*/
     border: 1px solid gray;
 }
 
