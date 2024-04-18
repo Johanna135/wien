@@ -47,11 +47,11 @@ L.control
   })
   .addTo(map);
 
-// Marker Stephansdom
-L.marker([stephansdom.lat, stephansdom.lng])
-  .addTo(themaLayer.sights)
-  .bindPopup(stephansdom.title) //wir verwenden den Title von oben -- als Stephansdom
-  .openPopup();
+// // Marker Stephansdom
+// L.marker([stephansdom.lat, stephansdom.lng])
+//   .addTo(themaLayer.sights)
+//   .bindPopup(stephansdom.title) //wir verwenden den Title von oben -- als Stephansdom
+//   .openPopup();
 
 // Maßstab
 L.control
@@ -103,6 +103,7 @@ async function loadlines(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.NAME);
+      layer.bindPopup(`<h4>${feature.properties.LINE_NAME}</h4>`);
     }
   }).addTo(themaLayer.lines);
 }
@@ -148,6 +149,10 @@ async function loadhotels(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.NAME);
+      layer.bindPopup(`
+      <h4> <a href="${feature.properties.WEBLINK1}" target="xyz"> ${feature.properties.BETRIEB}</a></h4>
+      <address>${feature.properties.ADRESSE}</address>
+      `);
     }
   }).addTo(themaLayer.hotels);
 }
