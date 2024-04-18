@@ -69,7 +69,18 @@ async function loadSights(url) { // async weil wir brauchen das für await, für
   let response = await fetch(url);
   let geojson = await response.json();
   console.log(geojson);
-  L.geoJSON(geojson).addTo(themaLayer.sights);
+  L.geoJSON(geojson, {
+    onEachFeature: function (feature, layer) {
+      console.log(feature);
+      console.log(feature.properties.NAME);
+      layer.bindPopup(`
+        <img src="${feature.properties.THUMBNAIL}" alt="*">
+      <h4> <a href="${feature.properties.WEITERE_INF}"
+      target="wien"> ${feature.properties.NAME}</a></h4>
+      <address>${feature.properties.ADRESSE}</address>
+      `);
+    }
+  }).addTo(themaLayer.sights); // wir laden das in themalayer.sights weil wir das wiederum oben schon in die map laden
   // wir laden die url down vom data.gv server und dann wandeln wir das in ein geojson um, so kann man sofort was visualisieren
 }
 loadSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
