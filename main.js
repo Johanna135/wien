@@ -102,8 +102,12 @@ async function loadlines(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
-      console.log(feature.properties.NAME);
-      layer.bindPopup(`<h4>${feature.properties.LINE_NAME}</h4>`);
+      console.log(feature.properties.LINE_NAME);
+      layer.bindPopup(`
+      <h4>${feature.properties.LINE_NAME}</h4>
+      <h5>Startstation: ${feature.properties.FROM_NAME}</h5>
+      <h5>Endstation: ${feature.properties.TO_NAME}</h5>
+      `);
     }
   }).addTo(themaLayer.lines);
 }
@@ -118,7 +122,8 @@ async function loadstops(url) {
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
       console.log(feature);
-      console.log(feature.properties.NAME);
+      console.log(feature.properties.STAT_NAME);
+      layer.bindPopup(`<h4><i class="fa-solid fa-bus"></i>${feature.properties.STAT_NAME}</h4>`);
     }
   }).addTo(themaLayer.stops);
 }
@@ -134,6 +139,7 @@ async function loadzones(url) {
     onEachFeature: function (feature, layer) {
       console.log(feature);
       console.log(feature.properties.NAME);
+      layer.bindPopup(`<i class="fa-solid fa-person-walking"></i><h4>Fußgängerzone</h4>`);
     }
   }).addTo(themaLayer.zones);
 }
@@ -150,7 +156,7 @@ async function loadhotels(url) {
       console.log(feature);
       console.log(feature.properties.NAME);
       layer.bindPopup(`
-      <h4> <a href="${feature.properties.WEBLINK1}" target="xyz"> ${feature.properties.BETRIEB}</a></h4>
+      <h4><i class="fa-solid fa-bed"></i> <a href="${feature.properties.WEBLINK1}" target="xyz"> ${feature.properties.BETRIEB}</a></h4>
       <address>${feature.properties.ADRESSE}</address>
       `);
     }
