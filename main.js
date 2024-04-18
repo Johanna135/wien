@@ -45,3 +45,8 @@ L.control
     imperial: false,
   })
   .addTo(map);
+
+// Vollbild mit plugin Fullscreen
+L.control
+  .fullscreen()
+  .addTo(map);
