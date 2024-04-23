@@ -162,7 +162,7 @@ async function loadhotels(url) {
       layer.bindPopup(`
       <h4>  ${feature.properties.BETRIEB}</h4>
       <h4><i class="fa-solid fa-bed"></i> Hotel ${feature.properties.KATEGORIE_TXT}</h4>
-      --------------------------------------------------------------
+      _________________________________
       <address>Addr.: ${feature.properties.ADRESSE}</address>
       Tel.: <a href="${feature.properties.KONTAKT_TEL}" target="xyz">${feature.properties.KONTAKT_TEL}</a><br>
       <a href="${feature.properties.KONTAKT_EMAIL}" target="xyz" > ${feature.properties.KONTAKT_EMAIL}</a><br>
