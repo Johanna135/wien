@@ -82,7 +82,9 @@ async function loadSights(url) { // async weil wir brauchen das für await, für
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
         icon: L.icon({
-          iconURL: "icons/photo.png"
+          iconUrl: "icons/photo.png",
+          iconAnchor: [16, 37], //das icon braucht einen Anchor - in der mitte des bildes, die zahlen sind die mitte des bildes
+          popupAnchor: [0, -37]
         })
       });
     },
