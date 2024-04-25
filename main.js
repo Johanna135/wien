@@ -20,7 +20,7 @@ startLayer.addTo(map);
 
 let themaLayer = {
   sights: L.featureGroup(),
-  lines: L.featureGroup(),
+  lines: L.featureGroup().addTo(map),
   stops: L.featureGroup(),
   zones: L.featureGroup().addTo(map),
   hotels: L.featureGroup(),
@@ -74,14 +74,14 @@ L.control
 
 //Sehenswürdigkeiten aus Datensatz data.gv
 async function loadSights(url) { // async weil wir brauchen das für await, für funktionen die länger dauern können
-  console.log("Loading", url);
+  //console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
-  console.log(geojson);
+  //console.log(geojson);
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
-      console.log(feature);
-      console.log(feature.properties.NAME);
+      //console.log(feature);
+      //console.log(feature.properties.NAME);
       layer.bindPopup(`
         <img src="${feature.properties.THUMBNAIL}" alt="*">
       <h4> <a href="${feature.properties.WEITERE_INF}"
@@ -95,14 +95,42 @@ async function loadSights(url) { // async weil wir brauchen das für await, für
 loadSights("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
 
 async function loadlines(url) {
-  console.log("Loading", url);
+  //console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
-  console.log(geojson);
+  //console.log(geojson);
   L.geoJSON(geojson, {
+    style: function (feature) {
+      let lineName = feature.properties.LINE_NAME;
+      let lineColor = "black";
+      if (lineName == "Red Line") {
+        lineColor = "#FF4136";
+      }
+      else if (lineName == "Green Line") {
+        lineColor = "#2ECC40"
+      }
+      else if (lineName == "Yellow Line") {
+        lineColor = "#FFDC00"
+      }
+      else if (lineName == "Blue Line") {
+        lineColor = "#0074D9"
+      }
+      else if (lineName == "Grey Line") {
+        lineColor = "#AAAAAA"
+      }
+      else if (lineName == "Orange Line") {
+        lineColor = "#FF851B"
+      }
+      else {
+        //vielleicht kommen noch andere Linien dazu
+      }
+      return {
+        color: lineColor,
+      }
+    },
     onEachFeature: function (feature, layer) {
-      console.log(feature);
-      console.log(feature.properties.LINE_NAME);
+      //console.log(feature);
+      //console.log(feature.properties.LINE_NAME);
       layer.bindPopup(`
       <h4><i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
       <h5><i class="fa-solid fa-circle-stop"></i> ${feature.properties.FROM_NAME}</h5>
@@ -116,14 +144,14 @@ async function loadlines(url) {
 loadlines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json")
 
 async function loadstops(url) {
-  console.log("Loading", url);
+  //console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
-  console.log(geojson);
+  //console.log(geojson);
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
-      console.log(feature);
-      console.log(feature.properties.STAT_NAME);
+      //console.log(feature);
+      //console.log(feature.properties.STAT_NAME);
       layer.bindPopup(`<h4><i class="fa-solid fa-bus"></i> ${feature.properties.LINE_NAME}</h4>
       ${feature.properties.STAT_NAME}`);
     }
@@ -133,10 +161,10 @@ async function loadstops(url) {
 loadstops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json")
 
 async function loadzones(url) {
-  console.log("Loading", url);
+  //console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
-  console.log(geojson);
+  //console.log(geojson);
   L.geoJSON(geojson, {
     style: function (feature) {
       return {
@@ -148,8 +176,8 @@ async function loadzones(url) {
 
     },
     onEachFeature: function (feature, layer) {
-      console.log(feature);
-      console.log(feature.properties.NAME);
+      //console.log(feature);
+      //console.log(feature.properties.NAME);
       layer.bindPopup(`<h4><i class="fa-solid fa-person-walking"></i> Fußgängerzone ${feature.properties.ADRESSE}</h4>
       <p><i class="fa-solid fa-clock"></i> ${feature.properties.ZEITRAUM || "dauerhaft"}</p>
       <p><i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT || "ohne Ausnahme"}</p>`);
@@ -160,14 +188,14 @@ async function loadzones(url) {
 loadzones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json")
 
 async function loadhotels(url) {
-  console.log("Loading", url);
+  //console.log("Loading", url);
   let response = await fetch(url);
   let geojson = await response.json();
-  console.log(geojson);
+  //console.log(geojson);
   L.geoJSON(geojson, {
     onEachFeature: function (feature, layer) {
-      console.log(feature);
-      console.log(feature.properties.NAME);
+      //console.log(feature);
+      //console.log(feature.properties.NAME);
       layer.bindPopup(`
       <h4>  ${feature.properties.BETRIEB}</h4>
       <h4><i class="fa-solid fa-bed"></i> Hotel ${feature.properties.KATEGORIE_TXT}</h4>
