@@ -22,8 +22,8 @@ let themaLayer = {
   sights: L.featureGroup().addTo(map),
   lines: L.featureGroup().addTo(map),
   stops: L.featureGroup().addTo(map),
-  zones: L.featureGroup(),
-  hotels: L.featureGroup().addTo(map),
+  zones: L.featureGroup().addTo(map),
+  hotels: L.markerClusterGroup().addTo(map),
 }
 
 // Hintergrundlayer
