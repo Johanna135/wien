@@ -20,8 +20,8 @@ startLayer.addTo(map);
 
 let themaLayer = {
   sights: L.featureGroup().addTo(map),
-  lines: L.featureGroup(),
-  stops: L.featureGroup(),
+  lines: L.featureGroup().addTo(map),
+  stops: L.featureGroup().addTo(map),
   zones: L.featureGroup(),
   hotels: L.featureGroup(),
 }
@@ -158,6 +158,15 @@ async function loadstops(url) {
   let geojson = await response.json();
   //console.log(geojson);
   L.geoJSON(geojson, {
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        icon: L.icon({
+          iconUrl: `icons/bus_${feature.properties.LINE_ID}.png`,
+          iconAnchor: [16, 37], //das icon braucht einen Anchor - in der mitte des bildes, die zahlen sind die mitte des bildes
+          popupAnchor: [0, -37]
+        })
+      });
+    },
     onEachFeature: function (feature, layer) {
       //console.log(feature);
       //console.log(feature.properties.STAT_NAME);
