@@ -23,7 +23,7 @@ let themaLayer = {
   lines: L.featureGroup().addTo(map),
   stops: L.featureGroup().addTo(map),
   zones: L.featureGroup(),
-  hotels: L.featureGroup(),
+  hotels: L.featureGroup().addTo(map),
 }
 
 // Hintergrundlayer
@@ -211,6 +211,36 @@ async function loadhotels(url) {
   let geojson = await response.json();
   //console.log(geojson);
   L.geoJSON(geojson, {
+
+    pointToLayer: function (feature, latlng) {
+      let hotelcat = feature.properties.KATEGORIE_TXT;
+      let icon
+      if (hotelcat == "nicht kategorisiert") {
+        icon = "icons/hotel_0star.png";
+      }
+      else if (hotelcat == "1*") {
+        icon = "icons/hotel_1stars.png";
+      }
+      else if (hotelcat == "2*") {
+        icon = "icons/hotel_2stars.png"
+      }
+      else if (hotelcat == "3*") {
+        icon = "icons/hotel_3stars.png"
+      }
+      else if (hotelcat == "4*") {
+        icon = "icons/hotel_4stars.png"
+      }
+      else if (hotelcat == "5*") {
+        icon = "icons/hotel_5stars.png"
+      }
+      return L.marker(latlng, {
+        icon: L.icon({
+          iconUrl: icon,
+          iconAnchor: [16, 37], //das icon braucht einen Anchor - in der mitte des bildes, die zahlen sind die mitte des bildes
+          popupAnchor: [0, -37]
+        })
+      });
+    },
     onEachFeature: function (feature, layer) {
       //console.log(feature);
       //console.log(feature.properties.NAME);
