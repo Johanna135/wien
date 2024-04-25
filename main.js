@@ -142,8 +142,8 @@ async function loadzones(url) {
       console.log(feature);
       console.log(feature.properties.NAME);
       layer.bindPopup(`<h4><i class="fa-solid fa-person-walking"></i> Fußgängerzone ${feature.properties.ADRESSE}</h4>
-      <p><i class="fa-solid fa-clock"></i> ${feature.properties.ZEITRAUM}</p>
-      <p><i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT}</p>`);
+      <p><i class="fa-solid fa-clock"></i> ${feature.properties.ZEITRAUM || "dauerhaft"}</p>
+      <p><i class="fa-solid fa-circle-info"></i> ${feature.properties.AUSN_TEXT || "ohne Ausnahme"}</p>`);
     }
   }).addTo(themaLayer.zones);
 }
@@ -162,10 +162,10 @@ async function loadhotels(url) {
       layer.bindPopup(`
       <h4>  ${feature.properties.BETRIEB}</h4>
       <h4><i class="fa-solid fa-bed"></i> Hotel ${feature.properties.KATEGORIE_TXT}</h4>
-      _________________________________
+      <hr></hr>
       <address>Addr.: ${feature.properties.ADRESSE}</address>
-      Tel.: <a href="${feature.properties.KONTAKT_TEL}" target="xyz">${feature.properties.KONTAKT_TEL}</a><br>
-      <a href="${feature.properties.KONTAKT_EMAIL}" target="xyz" > ${feature.properties.KONTAKT_EMAIL}</a><br>
+      Tel.: <a href="tel:${feature.properties.KONTAKT_TEL}">${feature.properties.KONTAKT_TEL}</a><br>
+      <a href="mailto:${feature.properties.KONTAKT_EMAIL}"> ${feature.properties.KONTAKT_EMAIL}</a><br>
       <a href="${feature.properties.WEBLINK1}" target="xyz">Homepage</a>
 
       `);
