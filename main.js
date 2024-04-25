@@ -79,6 +79,13 @@ async function loadSights(url) { // async weil wir brauchen das für await, für
   let geojson = await response.json();
   //console.log(geojson);
   L.geoJSON(geojson, {
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, {
+        icon: L.icon({
+          iconURL: "icons/photo.png"
+        })
+      });
+    },
     onEachFeature: function (feature, layer) {
       //console.log(feature);
       //console.log(feature.properties.NAME);
