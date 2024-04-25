@@ -211,10 +211,9 @@ async function loadhotels(url) {
   let geojson = await response.json();
   //console.log(geojson);
   L.geoJSON(geojson, {
-
     pointToLayer: function (feature, latlng) {
       let hotelcat = feature.properties.KATEGORIE_TXT;
-      let icon
+      let icon;
       if (hotelcat == "nicht kategorisiert") {
         icon = "icons/hotel_0star.png";
       }
@@ -232,6 +231,9 @@ async function loadhotels(url) {
       }
       else if (hotelcat == "5*") {
         icon = "icons/hotel_5stars.png"
+      }
+      else {
+        icon = "icons/hotel_0star.png";
       }
       return L.marker(latlng, {
         icon: L.icon({
